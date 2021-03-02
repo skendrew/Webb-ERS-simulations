@@ -11,9 +11,13 @@ This repository contains scripts and data to perform MIRI simulations for the JW
 The main packages used for these simulations are:
 
 * exonoodle: produces synthetic transit, eclipse or phase curve spectra for given star & planet properties. Code and documentation can be found [here](https://gitlab.com/mmartin-lagarde/exonoodle-exoplanets).  See also the [JOSS paper by Martin-Lagarde et al 2021.](https://joss.theoj.org/papers/10.21105/joss.02287)
-* MIRISim
+* MIRISim: produces simulated MIRI data for imager and spectroscopy modes. Publicly available from [this webpage](https://wiki.miricle.org/Public/MIRISim_Public).
+* MIRISim\_tso: a MIRISim add-on package that take MIRISim simulations, packages them into a time series and adds time-dependent noise and drifts.
 
 ## Contents and structure of the repository
+
+
+
 
 
 ## Dependencies
