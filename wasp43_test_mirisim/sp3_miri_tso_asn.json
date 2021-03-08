@@ -1,0 +1,23 @@
+{
+    "asn_type": "None",
+    "asn_rule": "DMS_Level3_Base",
+    "version_id": null,
+    "code_version": "0.18.3",
+    "degraded_status": "No known degraded exposures in association.",
+    "program": "noprogram",
+    "constraints": "No constraints",
+    "asn_id": "a3001",
+    "target": "none",
+    "asn_pool": "none",
+    "products": [
+        {
+            "name": "sp3_miri_tso",
+            "members": [
+                {
+                    "expname": "output_jwst0.18.3/det_image_seq1_MIRIMAGE_P750Lexp1_calints.fits",
+                    "exptype": "science"
+                }
+            ]
+        }
+    ]
+}
