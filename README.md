@@ -16,10 +16,33 @@ The main packages used for these simulations are:
 
 ## Contents and structure of the repository
 
+Last updated: 8 March 2021 -- SK
 
+The contents of the repository are as follows:
+
+#### Exonoodle files
+* wasp43b\_exonoodle.py: a script that runs exonoodle to generate the synthetic spectra. 
+* wasp43b\_bb\_noLD\_config.ini: the exonoodle configuration file that assumes the star is a simple BB (with the appropriate temperature and normalised to the correct magnitude).
+* OUTPUT: output\_bb\_noLD: folder containing the exonoodle output spectra from the above run
+
+#### MIRISim files (version used: 2.3.0)
+* wasp43b\_test\_mirisim.py: short script to set up and run a single MIRISim run using *one* of the exonoodle output spectra
+* wasp43b\_simple\_scene.ini: scene configuration file for MIRISim. This file is generated and written out in wasp43b\_test\_mirisim.py.
+* wasp43b\_ers\_shorttest\_simconfig.ini: the simulation configuration file for a short test simulation. This file is generated and written out in wasp43b\_test\_mirisim.py.
+* OUTPUT: wasp43\_test\_mirisim: folder containing the MIRISim output
+
+#### Pipeline (version used: 0.18.3/Build 7.7)
+* miri\_lrs\_tso\_pipeline.py: script that takes the MIRISim output and runs it through the JWST calibration pipeline
+* OUTPUT: the pipeline output files are located in wasp43\_test\_mirisim/output\_jwst0.18.3/
 
 
 
 ## Dependencies
 
+Check the individual packages for dependencies. These will most likely all be installed with the packages themselves.
 
+In addition, the following packages are used in the scripts:
+* glob
+* os
+* pdb (optional for debugging, these can be commented out)
+* matplotlib
