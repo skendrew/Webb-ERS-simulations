@@ -33,7 +33,7 @@ The contents of the repository are as follows:
 
 #### Pipeline (version used: 0.18.3/Build 7.7)
 * miri\_lrs\_tso\_pipeline.py: script that takes the MIRISim output and runs it through the JWST calibration pipeline
-* OUTPUT: the pipeline output files are located in wasp43\_test\_mirisim/output\_jwst0.18.3/
+* OUTPUT: the pipeline output files are located in wasp43\_test\_mirisim/output\_jwst0.18.3/ (the pipeline output files are NOT in the repository)
 
 
 
