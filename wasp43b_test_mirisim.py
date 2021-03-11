@@ -10,7 +10,7 @@ from mirisim.skysim import ExternalSed, Background, Point
 import rd_exonoodle as rdexon
 
 
-def mirisim_exonoodle(sedfile,phase,overwrite=True):
+def mirisim_exonoodle(sedfile,phase,overwrite=True,nint=1):
     
     target = Point(Cen=(0., 0.))
 
@@ -34,7 +34,7 @@ def mirisim_exonoodle(sedfile,phase,overwrite=True):
     
     # exposure configuration
     ngrp = 65
-    nint = 5
+    # nint = 5
     nexp = 1
     
     simname = 'wasp43b_ers_shorttest'
@@ -95,7 +95,11 @@ sedfiles, phases=rdexon.rd_exonoodle_filename(noodle_folder,phase_in=0.46666) # 
 for sedfile, phase in zip(sedfiles, phases):
     print('Reading exonoodle spectrum at phase {}'.format(phase))
     # print(sedfile)
-    mirisim_exonoodle(sedfile,phase,overwrite=True) #overwrites .ini files; turn it off by overwrite=Flase
+    if(len(phases)>1):
+        nint=1
+    else:
+        nint=5
+    mirisim_exonoodle(sedfile,phase,overwrite=True,nint=nint) #overwrites .ini files; turn it off by overwrite=Flase
 
 
 
