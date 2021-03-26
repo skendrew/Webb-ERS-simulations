@@ -16,14 +16,22 @@ The main packages used for these simulations are:
 
 ## Contents and structure of the repository
 
-Last updated: 8 March 2021 -- SK
+Last updated: 26 March 2021 -- SK
 
 The contents of the repository are as follows:
 
 #### Exonoodle files
 * wasp43b\_exonoodle.py: a script that runs exonoodle to generate the synthetic spectra. 
 * wasp43b\_bb\_noLD\_config.ini: the exonoodle configuration file that assumes the star is a simple BB (with the appropriate temperature and normalised to the correct magnitude).
+* wasp43b\_bb\_ersspectra\_noLD\_config.ini: the exonoodle configuration file using the input values and spectra from the ERS team. 
 * OUTPUT: output\_bb\_noLD: folder containing the exonoodle output spectra from the above run
+
+
+#### Folder CEA
+This contains the input spectra for WASP43b delivered with exonoodle. 
+
+#### Folder TauREX
+This contains the input spectra delivered by R. Challener of the transiting exoplanets ERS team, which will be used in common for all simulated datasets. Three spectra are used: daytime emission, nighttime emission and transmission. From teh original files we converted the the wavenumber axis into wavelengths (in micron), and wrote the table out in ECSV format, as required by exonoodle. 
 
 #### MIRISim files (version used: 2.3.0)
 * wasp43b\_test\_mirisim.py: short script to set up and run a single MIRISim run using *one* of the exonoodle output spectra
