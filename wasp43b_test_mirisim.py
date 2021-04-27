@@ -10,7 +10,7 @@ from mirisim.skysim import ExternalSed, Background, Point
 import rd_exonoodle as rdexon
 
 
-def mirisim_exonoodle(sedfile,phase,overwrite=True,nint=1):
+def mirisim_exonoodle(sedfile,phase,overwrite=True,nint=1, simname=None):
     
     target = Point(Cen=(0., 0.))
 
@@ -37,7 +37,8 @@ def mirisim_exonoodle(sedfile,phase,overwrite=True,nint=1):
     # nint = 5
     nexp = 1
     
-    simname = 'wasp43b_ers_shorttest'
+	#simname is now an input parameter
+    #simname = 'wasp43b_ers_shorttest'
     
     sim_config = SimConfig.makeSim(
         name = simname,    # name given to simulation
@@ -85,11 +86,11 @@ def mirisim_exonoodle(sedfile,phase,overwrite=True,nint=1):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Take output spectra from exonoodle, and produce a very simple exposure with ngroups of 65
 
-noodle_folder = 'output_bb_noLD/Noodles_2021-02-26/'
+noodle_folder = 'wasp43b_ersspectra_bb_noLD/Noodles_2021-03-26/'
 
 # Read all exonoodle spectra or at a given phase:
-# sedfiles, phases=rdexon.rd_exonoodle_filename(noodle_folder) # all phases
-sedfiles, phases=rdexon.rd_exonoodle_filename(noodle_folder,phase_in=0.46666) # at a given phase; ~0 or ~1:transit and ~0.5:eclipse
+sedfiles, phases=rdexon.rd_exonoodle_filename(noodle_folder) # all phases
+#sedfiles, phases=rdexon.rd_exonoodle_filename(noodle_folder,phase_in=0.46666) # at a given phase; ~0 or ~1:transit and ~0.5:eclipse
 
 #Run MIRISim with a simple setup
 for sedfile, phase in zip(sedfiles, phases):
@@ -99,7 +100,8 @@ for sedfile, phase in zip(sedfiles, phases):
         nint=1
     else:
         nint=5
-    mirisim_exonoodle(sedfile,phase,overwrite=True,nint=nint) #overwrites .ini files; turn it off by overwrite=Flase
+    #print('read spectrum {0}, phase {1:.3f}'.format(sedfile, phase))
+    mirisim_exonoodle(sedfile,phase,overwrite=True,nint=nint, simname='wasp43b_ersspectra_ph{0:.2f}'.format(phase)) #overwrites .ini files; turn it off by overwrite=Flase
 
 
 
