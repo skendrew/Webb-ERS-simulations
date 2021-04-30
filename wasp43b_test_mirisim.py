@@ -1,13 +1,20 @@
-# import numpy as np
+import numpy as np
 # import matplotlib.pyplot as plt
-# import pdb
-# import glob
+import pdb
+import glob
+import time
+import resource
+from functools import wraps
+
 
 from mirisim.config_parser import SimulatorConfig, SimConfig, SceneConfig
 from mirisim import MiriSimulation
 from mirisim.skysim import ExternalSed, Background, Point
 
 import rd_exonoodle as rdexon
+
+
+import os
 
 
 def mirisim_exonoodle(sedfile,phase,overwrite=True,nint=1, simname=None):
@@ -49,7 +56,7 @@ def mirisim_exonoodle(sedfile,phase,overwrite=True,nint=1, simname=None):
         Dither = False,             # Don't Dither
         StartInd = 1,               # start index for dither pattern [NOT USED HERE]
         NDither = 2,                # number of dither positions [NOT USED HERE]
-        DitherPat = 'ima_recommended_dither.dat', # dither pattern to use [NOT USED HERE]
+        DitherPat = 'lrs_recommended_dither.dat', # dither pattern to use [NOT USED HERE]
         disperser = 'SHORT',        # [NOT USED HERE]
         detector = 'SW',            # [NOT USED HERE]
         mrs_mode = 'SLOW',          # [NOT USED HERE]
@@ -69,11 +76,18 @@ def mirisim_exonoodle(sedfile,phase,overwrite=True,nint=1, simname=None):
     sim_config.write(simout, overwrite=True) #change if overwrite is not desired
     	
     # set up the simulator "under the hood". deafult values can be accepted here.
-    # simulator_config = SimulatorConfig.from_default()
+    simulator_config = SimulatorConfig('erssim_simulator.ini')
     
     
-    sim = MiriSimulation.from_configfiles(simout)
+    sim = MiriSimulation(sim_config, scene_config, simulator_config)
     sim.run()
+    
+    # now find the output folder and rename it
+    for root, dirs, files in os.walk('./'):
+        for dd in dirs:
+            if 'mirisim' in dd:
+                os.rename(dd, new_folder_name)
+    
     
     return
 
@@ -86,22 +100,34 @@ def mirisim_exonoodle(sedfile,phase,overwrite=True,nint=1, simname=None):
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Take output spectra from exonoodle, and produce a very simple exposure with ngroups of 65
 
-noodle_folder = 'wasp43b_ersspectra_bb_noLD/Noodles_2021-03-26/'
+noodle_folder = 'exonoodle/wasp43b_ersspectra_finesamp/exonoodle_ersspectra_finesamp_exp1/'
 
 # Read all exonoodle spectra or at a given phase:
 sedfiles, phases=rdexon.rd_exonoodle_filename(noodle_folder) # all phases
+print(sedfiles[:20], phases[:20])
 #sedfiles, phases=rdexon.rd_exonoodle_filename(noodle_folder,phase_in=0.46666) # at a given phase; ~0 or ~1:transit and ~0.5:eclipse
 
 #Run MIRISim with a simple setup
-for sedfile, phase in zip(sedfiles, phases):
+for sedfile, phase in zip(sedfiles[:3], phases[:3]):
     print('Reading exonoodle spectrum at phase {}'.format(phase))
     # print(sedfile)
     if(len(phases)>1):
         nint=1
     else:
         nint=5
-    #print('read spectrum {0}, phase {1:.3f}'.format(sedfile, phase))
-    mirisim_exonoodle(sedfile,phase,overwrite=True,nint=nint, simname='wasp43b_ersspectra_ph{0:.2f}'.format(phase)) #overwrites .ini files; turn it off by overwrite=Flase
+    print('read spectrum {0}, phase {1:.5f}'.format(sedfile, phase))
+    simname = 'wasp43b_ersspectra_finesamp_ph{0:.4f}'.format(phase)
+    new_folder_name = 'wasp43b_ersspectra_finesamp_ph{0:.4f}_sim'.format(phase)
+    #print(simname)
+    #mirisim_exonoodle(sedfile,phase,overwrite=True,nint=nint, simname=simname) #overwrites .ini files; turn it off by overwrite=Flase
+    
+    # now find the output folder and rename it
+#    for root, dirs, files in os.walk('./'):
+#        for dd in dirs:
+#            if 'mirisim' in dd:
+#                os.rename(dd, new_folder_name)
+    
+    
 
 
 
